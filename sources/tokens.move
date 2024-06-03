@@ -17,6 +17,7 @@ module tokens::MyToken {
         name: string::String,
         description: string::String,
         url: Url,
+        balance: u64,
     }
 
     // Events:
@@ -27,13 +28,14 @@ module tokens::MyToken {
     }
 
     /// Create a new devnet_nft
-    public fun mint_to_sender(name: vector<u8>, description: vector<u8>, url: vector<u8>, ctx: &mut TxContext) {
+    public fun mint_to_sender(name: vector<u8>, description: vector<u8>, url: vector<u8>, balance: u64, ctx: &mut TxContext) {
         let sender = tx_context::sender(ctx);
         let nft = MyToken {
             id: object::new(ctx),
             name: string::utf8(name),
             description: string::utf8(description),
-            url: url::new_unsafe_from_bytes(url)
+            url: url::new_unsafe_from_bytes(url),
+            balance: balance,
         };
 
         event::emit(NFTMinted { object_id: object::id(&nft),creator: sender, name: nft.name,});
