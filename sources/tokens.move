@@ -54,5 +54,11 @@ module tokens::MyToken {
         transfer::public_transfer(nft, recipient);
     }
 
+    //add balance
+    public fun modify_balance(nft: &mut MyToken, new_balance: u64){
+        assert!(new_balance >= 0, 42);
+        nft.balance = new_balance;
     }
+
+}
 
